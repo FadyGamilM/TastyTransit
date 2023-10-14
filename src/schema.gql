@@ -3,10 +3,16 @@
 # ------------------------------------------------------
 
 type Restaurant {
-  name: String
+  name: String!
+  isVegan: Boolean!
 }
 
 type Query {
-  restaurantInfo: Restaurant!
+  restaurantInfo(name: String!): Restaurant!
   allRestaurants: [Restaurant!]!
+  selectVeganRestaurants(type: String!): [Restaurant!]!
+}
+
+type Mutation {
+  createRestaurant(name: String!, isVegan: Boolean!): Boolean!
 }
