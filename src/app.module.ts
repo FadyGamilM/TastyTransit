@@ -6,6 +6,7 @@ import { join } from 'path';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from "joi" // we must import joi in this way because it doesn't have a ts compatability 
+import { Restaurant } from './restaurants/entities/restaurant.entity';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -21,7 +22,7 @@ import * as Joi from "joi" // we must import joi in this way because it doesn't 
                 DB_PASSWORD: Joi.required(),
                 DB_NAME: Joi.required(),
                 DB_PORT: Joi.required(),
-            })
+            }),
         }),
         GraphQLModule.forRoot<ApolloDriverConfig>({
             driver: ApolloDriver,
@@ -35,9 +36,9 @@ import * as Joi from "joi" // we must import joi in this way because it doesn't 
             password: process.env.DB_PASSWORD,
             database: process.env.DB_NAME,
             port: +process.env.DB_PORT, // + to convert it into number
-
             synchronize: true, // for auto migration to the current models state 
             logging: true,
+            entities: [Restaurant]
         })
     ],
     controllers: [],

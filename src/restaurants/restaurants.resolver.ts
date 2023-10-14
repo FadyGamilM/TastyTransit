@@ -1,36 +1,38 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { Restaurant } from "./entities/restaurant.entity";
+import { RestaurantGQL } from "./gql-objects/restaurant.object";
 import { log } from "console";
 import { CreateRestaurantReqDto } from "./dtos/create-restaurant.dto";
 
-@Resolver(resolverFor => Restaurant)
+@Resolver(resolverFor => RestaurantGQL)
 export class RestaurantResolver {
-    public data: Restaurant[] = [
+    public data: RestaurantGQL[] = [
         {
+            id: 0,
             name: "Maccdonals",
             isVegan: false
         },
         {
+            id: 1,
             name: "KFC",
             isVegan: false
         }
     ]
 
-    @Query(returns => Restaurant)
-    restaurantInfo(@Args("name") restaurantName: string): Restaurant {
-        let r: Restaurant = this.data.find(r => r.name === restaurantName)
+    @Query(returns => RestaurantGQL)
+    restaurantInfo(@Args("name") restaurantName: string): RestaurantGQL {
+        let r: RestaurantGQL = this.data.find(r => r.name === restaurantName)
         if (r) return r
         return null
     }
 
-    @Query(returns => [Restaurant])
-    allRestaurants(): Restaurant[] {
+    @Query(returns => [RestaurantGQL])
+    allRestaurants(): RestaurantGQL[] {
         return this.data
     }
 
-    @Query(returns => [Restaurant])
-    selectVeganRestaurants(@Args("type") type: string): Restaurant[] {
-        const vegans: Restaurant[] = this.data.filter(r => r.isVegan === true)
+    @Query(returns => [RestaurantGQL])
+    selectVeganRestaurants(@Args("type") type: string): RestaurantGQL[] {
+        const vegans: RestaurantGQL[] = this.data.filter(r => r.isVegan === true)
         return vegans
     }
 
@@ -55,6 +57,7 @@ export class RestaurantResolver {
         const isFound = this.data.find(r => dto.name === r.name)
         if (isFound) return false
         this.data.push({
+            id: null,
             name: dto.name,
             isVegan: dto.isVegan
         })

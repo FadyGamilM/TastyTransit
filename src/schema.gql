@@ -2,15 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Restaurant {
+type RestaurantGQL {
+  id: ID
   name: String!
   isVegan: Boolean!
 }
 
 type Query {
-  restaurantInfo(name: String!): Restaurant!
-  allRestaurants: [Restaurant!]!
-  selectVeganRestaurants(type: String!): [Restaurant!]!
+  restaurantInfo(name: String!): RestaurantGQL!
+  allRestaurants: [RestaurantGQL!]!
+  selectVeganRestaurants(type: String!): [RestaurantGQL!]!
 }
 
 type Mutation {

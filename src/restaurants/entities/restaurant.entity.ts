@@ -1,11 +1,16 @@
 import { Field, ObjectType } from "@nestjs/graphql";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-// this is the typeDefs of Restaurant 
-@ObjectType() // describe to graphql how the restaurant looks like (for gql point of view)
+// the db entity model
+@Entity()
 export class Restaurant {
-    @Field(is => String, { nullable: false }) // this is a gql type not ts type 
+
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column()
     name: string;
 
-    @Field(is => Boolean, { nullable: false })
+    @Column()
     isVegan: Boolean;
 }
