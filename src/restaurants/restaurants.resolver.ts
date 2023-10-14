@@ -2,9 +2,15 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { RestaurantGQL } from "./gql-objects/restaurant.object";
 import { log } from "console";
 import { CreateRestaurantReqDto } from "./dtos/create-restaurant.dto";
+import { RestaurantsService } from "./restaurants.service";
+import { Restaurant } from "./entities/restaurant.entity";
 
 @Resolver(resolverFor => RestaurantGQL)
 export class RestaurantResolver {
+    // inject services 
+    constructor(
+        private readonly restaurantService: RestaurantsService
+    ) { }
     public data: RestaurantGQL[] = [
         {
             id: 0,
@@ -26,8 +32,19 @@ export class RestaurantResolver {
     }
 
     @Query(returns => [RestaurantGQL])
-    allRestaurants(): RestaurantGQL[] {
-        return this.data
+    async allRestaurants(): Promise<RestaurantGQL[]> {
+        let restaurants: RestaurantGQL[] = []
+        const dbRestaurants: Restaurant[] = await this.restaurantService.getAll()
+        for (const dbRestaurant of dbRestaurants) {
+            restaurants.push(
+                {
+                    id: dbRestaurant.id,
+                    name: dbRestaurant.name,
+                    isVegan: dbRestaurant.isVegan,
+                }
+            )
+        }
+        return restaurants
     }
 
     @Query(returns => [RestaurantGQL])
