@@ -11,6 +11,6 @@ export class Restaurant {
     @Column()
     name: string;
 
-    @Column()
+    @Column({ default: false })
     isVegan: Boolean;
 }

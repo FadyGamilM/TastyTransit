@@ -1,5 +1,4 @@
 import { ArgsType, Field, InputType, OmitType } from "@nestjs/graphql";
-import { IsBoolean, IsString, Length, min } from "class-validator";
 import { Restaurant } from "../entities/restaurant.entity";
 import { RestaurantGQL } from "../gql-objects/restaurant.object";
 

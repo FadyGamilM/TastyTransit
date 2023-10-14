@@ -20,5 +20,5 @@ type Mutation {
 
 input CreateRestaurantReqDto {
   name: String!
-  isVegan: Boolean!
+  isVegan: Boolean! = false
 }
