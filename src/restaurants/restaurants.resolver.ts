@@ -68,16 +68,11 @@ export class RestaurantResolver {
     //     return true
     // }
     @Mutation(returns => Boolean)
-    createRestaurant(
-        @Args() dto: CreateRestaurantReqDto
-    ): Boolean {
-        const isFound = this.data.find(r => dto.name === r.name)
-        if (isFound) return false
-        this.data.push({
-            id: null,
-            name: dto.name,
-            isVegan: dto.isVegan
-        })
-        return true
+    async createRestaurant(
+        @Args("data") dto: CreateRestaurantReqDto // to send this mutation we say //! `mutation { createRestaurant (data : {name: 'bla bla', isVegan: false}) }`
+    ): Promise<Boolean> {
+        const created = await this.restaurantService.Create(dto)
+        if (created) return true
+        return false
     }
 }
