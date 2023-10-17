@@ -7,6 +7,9 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from "joi" // we must import joi in this way because it doesn't have a ts compatability 
 import { Restaurant } from './restaurants/entities/restaurant.entity';
+import { CommonModule } from './common/common.module';
+import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -38,8 +41,10 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
             port: +process.env.DB_PORT, // + to convert it into number
             synchronize: true, // for auto migration to the current models state 
             logging: true,
-            entities: [Restaurant]
-        })
+            entities: [Restaurant, User]
+        }),
+        CommonModule,
+        UsersModule
     ],
     controllers: [],
     providers: [],
