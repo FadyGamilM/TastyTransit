@@ -4,6 +4,7 @@ import { log } from "console";
 import { CreateRestaurantReqDto } from "./dtos/create-restaurant.dto";
 import { RestaurantsService } from "./restaurants.service";
 import { Restaurant } from "./entities/restaurant.entity";
+import { UpdateRestaurantDto } from "./dtos/update-restaurant.dto";
 
 @Resolver(resolverFor => RestaurantGQL)
 export class RestaurantResolver {
@@ -74,5 +75,17 @@ export class RestaurantResolver {
         const created = await this.restaurantService.Create(dto)
         if (created) return true
         return false
+    }
+
+    @Mutation(returns => Boolean)
+    async updateRestaurantByID(
+        @Args("data") data: UpdateRestaurantDto
+    ): Promise<Boolean> {
+        try {
+            const res: Boolean = await this.restaurantService.UpdateByID(data)
+            return res
+        } catch (error) {
+            log(`ERROR => ${error}`)
+        }
     }
 }

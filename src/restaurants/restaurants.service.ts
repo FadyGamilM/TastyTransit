@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { ObjectId, Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateRestaurantReqDto } from './dtos/create-restaurant.dto';
+import { UpdateRestaurantDto } from './dtos/update-restaurant.dto';
 
 @Injectable()
 export class RestaurantsService {
@@ -23,5 +24,11 @@ export class RestaurantsService {
 
         // then save it into the database 
         return await this.restaurantRepo.save(r)
+    }
+
+    public async UpdateByID({ id, updated_data }: UpdateRestaurantDto): Promise<Boolean> {
+        let updated = await this.restaurantRepo.update(id, { ...updated_data })
+        if (updated) return true
+        return false
     }
 }

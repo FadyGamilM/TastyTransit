@@ -8,3 +8,6 @@ TastyTransit is a backend system cloning the UberEats application built-in Nest.
 
 - @nestjs/config <br>
     I used it to setup the config file in the app.module and access the configs from anywhere of the application
+
+- if you are using InputType() --> your argument must have a name inside the mutation list of params .. example : Args("data") data : UpdateReqDto
+- if you are using ArgsType() --> your argument must have no name inside the mutation list of params .. example : Args() data : CreteReqDto
